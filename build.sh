@@ -3,12 +3,9 @@
 runtime="mono"
 cljcomp=$CLOJURE_LOAD_PATH/Clojure.Compile.exe
 BUILD_PATH=build/
+EXTERN_PATH=extern/
 MAIN_NS=chromium.core
 
-
-compile(){
-  CLOJURE_COMPILE_PATH=$BUILD_PATH $runtime $cljcomp $MAIN_NS
-}
 
 clean_up(){
   rm -rf build/*
@@ -20,11 +17,31 @@ link_dlls(){
     ln -s $CLOJURE_LOAD_PATH/*.dll build/
     cd build/
     ln -s ../extern/OpenTK/lib/net20/OpenTK.dll .
+    cd ../
   else
     mkdir $BUILD_PATH
     link_dlls
   fi
 }
+
+install_deps(){
+  if [ ! -d "$EXTERN_PATH" ]; then
+    mkdir extern
+    cd extern/
+    nuget install OpenTK -ExcludeVersion
+    nuget install ILRepack -ExcludeVersion
+    cd ../
+    #nuget install ilmerge
+  fi
+}
+
+
+compile(){
+  install_deps
+  link_dlls
+  CLOJURE_COMPILE_PATH=$BUILD_PATH $runtime $cljcomp $MAIN_NS
+}
+
 
 run(){
   $runtime build/$MAIN_NS.exe
@@ -64,7 +81,7 @@ case "$1" in
     clean_up
     ;;
   *)
-    echo "Clojure CLR build script."
+    echo "Mono Chromium build script."
     echo "Usage: $0 [Options]"
     echo "Mandatory Options :
          c | compile

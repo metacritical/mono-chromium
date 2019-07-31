@@ -1,4 +1,4 @@
-# Mono-chromium
+# Mono-chromium (WIP) 🔨🧲🧱
 
 Mono Chromium is (WIP) Port of Chromium BSU, the classic Arcade Space shooter initially developed
 on Linux using SDL and C++. Mono Chromium is being written in Clojure-CLR with Mono/.Net to 
