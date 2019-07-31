@@ -10,10 +10,20 @@ compile(){
   CLOJURE_COMPILE_PATH=$BUILD_PATH $runtime $cljcomp $MAIN_NS
 }
 
+clean_up(){
+  rm -rf build/*
+}
+
 link_dlls(){
-  ln -s $CLOJURE_LOAD_PATH/*.dll build/
-  cd build/
-  ln -s ../extern/OpenTK/lib/net20/OpenTK.dll .
+  if [ -d "$BUILD_PATH" ]; then
+    clean_up
+    ln -s $CLOJURE_LOAD_PATH/*.dll build/
+    cd build/
+    ln -s ../extern/OpenTK/lib/net20/OpenTK.dll .
+  else
+    mkdir $BUILD_PATH
+    link_dlls
+  fi
 }
 
 run(){
@@ -33,11 +43,6 @@ release(){
   #TODO: mono extern/ILMerge.3.0.29/tools/net452/ILMerge.exe ILRepack or monolinker/mkbundle
 }
 
-
-clean_up(){
-  rm -rf build/*
-  link_dlls
-}
 
 case "$1" in
   c|compile)
