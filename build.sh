@@ -9,6 +9,7 @@ MAIN_NS=chromium.core
 
 clean_up(){
   rm -rf build/*
+  rm -rf release/*
 }
 
 link_dlls(){

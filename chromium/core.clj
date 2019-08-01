@@ -1,8 +1,7 @@
-(assembly-load-from "./extern/OpenTK/lib/net20/OpenTK.dll")
-
 (ns chromium.core
   (:gen-class)
-  (:require [chromium.window :as window])
+  (:require [chromium.load-assembly]
+            [chromium.window :as window])
   (:import [System]
            [System.IO]
            [System.Console]

@@ -8,7 +8,7 @@
 
 (defn on-update-frame [this event]
   (let [input (Keyboard/GetState)]
-    (if (.IsKeyDown input Key/Escape)
+    (when (.IsKeyDown input Key/Escape)
       (.Exit this))))
 
 (defn set-bg-color [color]
