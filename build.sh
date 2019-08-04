@@ -81,16 +81,21 @@ case "$1" in
   q|clean)
     clean_up
     ;;
+  cr|comprun)
+    compile
+    run
+    ;;
   *)
     echo "Mono Chromium build script."
     echo "Usage: $0 [Options]"
     echo "Mandatory Options :
-         c | compile
-         l | link
-         r | run
-         b | build
-         z | rel
-         q | clean"
+         c  | compile - compile
+         l  | link    - link dlls as symlink in build dir.
+         r  | run     - run
+         b  | build   - build
+         z  | rel     - release
+         cr | comprun - Compile and Run
+         q  | clean   - Cleanup"
 esac
 
 
