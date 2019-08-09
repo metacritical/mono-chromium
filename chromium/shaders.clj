@@ -3,25 +3,11 @@
            [OpenTK.Graphics.ES30 PrimitiveType]
            [OpenTK.Graphics.OpenGL4 GL BufferTarget]))
 
-(defonce vtex-src
-  "#version 410 core
+(def vtex-src
+  (slurp "shaders/vert.shader" :encoding "UTF-8"))
 
-layout(location = 0) in vec3 aPosition;
-
-void main(void)
-{
-    gl_Position = vec4(aPosition, 1.0);
-}")
-
-(defonce frag-src
-  "#version 410
-
-out vec4 outputColor;
-
-void main()
-{
-    outputColor = vec4(1.0, 1.0, 0.0, 1.0);
-}")
+(def frag-src
+  (slurp "shaders/frag.shader" :encoding "UTF-8"))
 
 
 (defn bindShader [shader shader-src]
