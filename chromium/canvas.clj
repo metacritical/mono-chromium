@@ -14,12 +14,12 @@
 
 (defn on-load [this event]
   (let [vShader (s/load-shader ShaderType/VertexShader s/vtex-src)
-        fShader (s/load-shader ShaderType/FragmentShader s/frag-src)
-        triangle obj/triangle]
+        fShader (s/load-shader ShaderType/FragmentShader s/frag-src)]
+
+    (util/set-bg-color Color/CornflowerBlue)
 
     (Console/WriteLine (str "OpenGL Version: "
                             (GL/GetString StringName/Version)))
-
 
     (reset! vbo (GL/GenBuffer))
     (GL/BindBuffer BufferTarget/ArrayBuffer @vbo)
@@ -30,10 +30,6 @@
 
     (reset! handler (GL/CreateProgram))
 
-    (Console/WriteLine (GL/GetShaderInfoLog vShader))
-    (Console/WriteLine (GL/GetShaderInfoLog fShader))
-
-
     (GL/AttachShader @handler vShader)
     (GL/AttachShader @handler fShader)
 
@@ -42,19 +38,15 @@
     (s/detachndelete @handler vShader)
     (s/detachndelete @handler fShader)
 
-
     (GL/UseProgram @handler)
 
-    
     (reset! vao (GL/GenVertexArray))
     (GL/BindVertexArray @vao)
 
-    (GL/VertexAttribPointer (int 0) 3 VertexAttribPointerType/Float false
-                            obj/size-of-tri 0)
+    (GL/VertexAttribPointer (int 0) (int 3) VertexAttribPointerType/Float false 0 0)
 
     (GL/EnableVertexAttribArray (int 0))
     (GL/BindBuffer BufferTarget/ArrayBuffer @vbo)))
-
 
 (defn on-update-frame [this event]
   (let [input (Keyboard/GetState)]
@@ -66,7 +58,6 @@
   (GL/UseProgram @handler)
   (GL/BindVertexArray @vao)
   (GL/DrawArrays PrimitiveType/Triangles 0 3)
-  ;; (GL/DrawArrays PrimitiveType/Lines 0 3)  ;; This works and draws one line.
   (.SwapBuffers this))
 
 (defn on-unload [this event]

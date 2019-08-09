@@ -4,7 +4,7 @@
            [OpenTK.Graphics.OpenGL4 GL BufferTarget]))
 
 (defonce vtex-src
-  "#version 330 core
+  "#version 410 core
 
 layout(location = 0) in vec3 aPosition;
 
@@ -14,7 +14,7 @@ void main(void)
 }")
 
 (defonce frag-src
-  "#version 330
+  "#version 410
 
 out vec4 outputColor;
 
@@ -34,6 +34,8 @@ void main()
   (let [shad (GL/CreateShader type)]
     (bindShader shad src)
     (compileShader shad)
+    (if-let [log (not-empty (GL/GetShaderInfoLog shad))]
+      (Console/WriteLine log))
     shad))
 
 (defn detachndelete [handle shader]
