@@ -13,6 +13,8 @@
   (Console/WriteLine (util/opengl-version))
   (util/set-bg-color Color/CornflowerBlue)
   (onload/init)
+  (onload/init-vbo)
+  (onload/init-vao)
   (onload/render))
 
 (defn on-update-frame [this event]

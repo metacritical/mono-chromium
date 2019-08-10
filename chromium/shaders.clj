@@ -23,7 +23,3 @@
     (if-let [log (not-empty (GL/GetShaderInfoLog shad))]
       (Console/WriteLine log))
     shad))
-
-(defn detachndelete [handle shader]
-  (GL/DetachShader handle shader)
-  (GL/DeleteShader shader))
