@@ -10,16 +10,16 @@
   (slurp "shaders/frag.shader" :encoding "UTF-8"))
 
 
-(defn bindShader [shader shader-src]
+(defn bind-shader [shader shader-src]
   (GL/ShaderSource shader shader-src))
 
-(defn compileShader [shader]
+(defn compile-shader [shader]
   (GL/CompileShader shader))
 
 (defn load-shader [type src]
   (let [shad (GL/CreateShader type)]
-    (bindShader shad src)
-    (compileShader shad)
+    (bind-shader shad src)
+    (compile-shader shad)
     (if-let [log (not-empty (GL/GetShaderInfoLog shad))]
       (Console/WriteLine log))
     shad))

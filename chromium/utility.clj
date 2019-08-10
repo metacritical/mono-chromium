@@ -3,6 +3,9 @@
            [OpenTK.Graphics.ES30 BufferUsageHint]
            [OpenTK.Graphics.ES30 ClearBufferMask]))
 
+(defn opengl-version []
+  (str "OpenGL Version: " (GL/GetString StringName/Version)))
+
 (defn clear-buffer-mask []
   (GL/Clear ClearBufferMask/ColorBufferBit))
 
@@ -20,3 +23,8 @@
       (.AddrOfPinnedObject pinned-obj)
       (finally
         (if (.IsAllocated pinned-obj) (.Free pinned-obj))))))
+
+
+
+
+
